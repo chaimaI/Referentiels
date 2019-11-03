@@ -1,0 +1,54 @@
+﻿
+@model Referentiels.Models.ClasseListeViewModel
+
+
+<div class="header-portail" style="margin-top:70px">Modifier une liste</div>
+
+@using (Html.BeginForm("EditItemLists", "Referential", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+
+    @Html.AntiForgeryToken()
+    @*<div id="messagesActions">
+            @Html.LabelFor(c => c, Model.MessageError, new { @class = "alert alert-danger" })
+        </div>*@
+    <div class="form-horizontal" style="margin-top:30px">
+        <div class="col-xs-12">
+            @*<h4>
+                <span>Modifier un élément de @Model.NomClasses</span>
+                @Html.HiddenFor(c => c.Id)
+            </h4>*@
+            <div class="form-group">
+                @Html.LabelFor(c => c.NomClasses)
+                @Html.TextBoxFor(c => c.NomClasses, Model.NomClasses, new { id = "NomClasses", @class = "form-control-textbox form-control" })
+                @Html.ValidationMessageFor(c => c.NomClasses, string.Empty, new { @class = "text-danger" })
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(c => c.Niveau)
+                @Html.TextBoxFor(c => c.Niveau, Model.Niveau.ToString(), new { id = "Niveau", @class = "form-control-textbox form-control" })
+                @Html.ValidationMessageFor(c => c.Niveau, string.Empty, new { @class = "text-danger" })
+            </div>
+
+            
+            <span style="font-size:17px; margin-left:-15px">Image :</span>
+            <div class="input-group" style="margin-left:-15px">
+                <label class="input-group-btn">
+                    <span class="btn btn-primary">
+                        Ajouter une Image&hellip;
+                        <input type="file" name="file"
+                               accept="" style="display: none;">
+                    </span>
+                </label>
+                <input type="text" class="form-control" style="z-index:1" readonly>
+            </div>
+            <br/>
+
+            <div class="form-group">
+                <a href="@Url.Action("ItemList", "Referential", new {id=Model.Id} )" class="btn btn-default">Revenir à la liste</a>
+                <input type="submit" value="Modifier l'élément de liste" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}

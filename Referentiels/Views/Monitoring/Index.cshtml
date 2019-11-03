@@ -1,0 +1,235 @@
+﻿@model Referentiels.Models.Monitoring.MonitoringViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = null;
+}
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/Content/bootstrap")
+@Scripts.Render("~/bundles/js")
+
+<div class="col-md-offset-1 col-md-10 titleSite" style="margin-top:70px; text-align:center">PILmetrics <img src="~/Content/images/monito.png" style="text-align:center" /></div>
+<div class="row">
+    <div class="col-lg-offset-9 col-lg-3" style="color:black">
+        Données actualisées : @Html.Raw(ViewBag.DateRefresh)
+    </div>
+</div>
+
+<hr />
+
+<div style="display: flex; flex-direction:row">
+
+    @foreach (var q in Model.QueryAvailable.Where(x => !x.IsTechnical).OrderBy(x => x.StatusAlert.OrderAlert))
+    {
+        if (@q.StatusAlert.ClassAlert == "AlertGreen")
+        {
+            <div class="card text-white bg-success mb-3" style="max-width: 18rem;margin:auto; padding:40px ">
+
+                <div class="alertDiv " id="@q.IdQuery">
+                    <div class="card-header alertEntete @q.StatusAlert.ClassAlert" data-toggle="tooltip" title="@q.Description" style="text-align:center; ">@Html.Label(q.Name)</div>
+                    <div class="card-body alertResult @q.StatusAlert.ClassAlert" style="text-align:center">
+                        @if (string.IsNullOrEmpty(q.ErrorMessage))
+                        {
+                            @Html.Label(q.ResultQuery.NbElement.ToString(), new
+                       {
+
+                           @class = "numberClass"
+
+                       })
+
+
+                        }
+                        else
+                        {
+                            @q.ErrorMessage;<input type="button" class="btn btn-default detailError " value="Detail" data-value="@q.Exception.ToString()" />
+                        }
+                    </div>
+                </div>
+
+            </div>
+
+        }
+
+
+        else if (@q.StatusAlert.ClassAlert == "AlertRed")
+        {
+            <div class="card text-white bg-danger mb-3" style="max-width: 18rem; margin: auto; margin: auto; padding:40px">
+
+                <div class="alertDiv " id="@q.IdQuery">
+                    <div class="card-header alertEntete @q.StatusAlert.ClassAlert" data-toggle="tooltip" title="@q.Description" style="text-align:center">@Html.Label(q.Name)</div>
+                    <div class="card-body alertResult @q.StatusAlert.ClassAlert" style="text-align:center">
+                        @if (string.IsNullOrEmpty(q.ErrorMessage))
+                        {
+                            @Html.Label(q.ResultQuery.NbElement.ToString(), new
+                       {
+
+                           @class = "numberClass"
+
+                       })
+                        }
+                        else
+                        {
+                            @q.ErrorMessage;<input type="button" class="btn btn-default detailError " value="Detail" data-value="@q.Exception.ToString()" />
+                        }
+                    </div>
+                </div>
+
+
+            </div>
+
+        }
+        else if ((@q.StatusAlert.ClassAlert == "AlertOrange"))
+        {
+            <div class="card text-white bg-warning mb-3" style="max-width: 18rem; margin: auto; padding:40px">
+
+                <div class="alertDiv " id="@q.IdQuery">
+                    <div class="card-header alertEntete @q.StatusAlert.ClassAlert" data-toggle="tooltip" title="@q.Description" style="text-align:center">@Html.Label(q.Name)</div>
+                    <div class="card-body alertResult @q.StatusAlert.ClassAlert" style="text-align:center">
+                        @if (string.IsNullOrEmpty(q.ErrorMessage))
+                        {
+                            @Html.Label(q.ResultQuery.NbElement.ToString(), new
+                       {
+
+                           @class = "numberClass"
+
+                       })
+                        }
+                        else
+                        {
+                            @q.ErrorMessage;<input type="button" class="btn btn-default detailError " value="Detail" data-value="@q.Exception.ToString()" />
+                        }
+                    </div>
+                </div>
+
+            </div>
+
+        }
+
+
+        else
+        {
+
+            <div class="card text-white bg-secondary mb-3" style="max-width: 18rem; padding:40px">
+
+                <div class="alertDiv " id="@q.IdQuery">
+                    <div class="card-header alertEntete @q.StatusAlert.ClassAlert" data-toggle="tooltip" title="@q.Description" style="text-align:center">@Html.Label(q.Name)</div>
+                    <div class="card-body alertResult @q.StatusAlert.ClassAlert" style="text-align:center">
+                        @if (string.IsNullOrEmpty(q.ErrorMessage))
+                        {
+                            @Html.Label(q.ResultQuery.NbElement.ToString(), new
+                       {
+
+                           @class = "numberClass"
+
+                       })
+                        }
+                        else
+                        {
+                            @q.ErrorMessage;<input type="button" class="btn btn-default detailError " value="Detail" data-value="@q.Exception.ToString()" />
+                        }
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+        }
+    }
+
+</div>
+
+
+
+
+@*<div class="col regie">
+        <h1 class="titleSite">Régie</h1>
+        <div class="vignettes">
+            @foreach (var q in Model.QueryAvailable.Where(x => !x.IsTechnical).OrderBy(x => x.StatusAlert.OrderAlert))
+            {
+                <div class="alertDiv " id="@q.IdQuery">
+                    <div class="alertEntete @q.StatusAlert.ClassAlert" data-toggle="tooltip" title="@q.Description">@Html.Label(q.Name)</div>
+                    <div class="alertResult @q.StatusAlert.ClassAlert">
+                        @if (string.IsNullOrEmpty(q.ErrorMessage))
+                        {
+                            @Html.Label(q.ResultQuery.NbElement.ToString(), new
+                       {
+
+                           @class = "numberClass"
+
+                       })
+                        }
+                        else
+                        {
+                            @q.ErrorMessage;<input type="button" class="btn btn-default detailError " value="Detail" data-value="@q.Exception.ToString()" />
+                        }
+                    </div>
+                </div>
+
+            }
+
+
+        </div>
+    </div>*@
+
+
+<!-- Modal -->
+<div class="modal modal-transparent fade" id="modal-resultQuery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-container modalResultCollab">
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+                <div id="ResultQueryDiv"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+
+
+        $(".alertDiv").on("click", null, function () {
+            $.ajax({
+                url: '@Url.Action("GetResultQuery","Monitoring")',
+                type: "Get",
+                cache: false,
+                dataType: "json",
+                data: { idQuery: this.id },
+                success: function (data) {
+                    $("#ResultQueryDiv").html(data);
+                    $("#modal-resultQuery").modal("show");
+                    $('.ResultQuery').DataTable({
+                        dom: 'Bfrtip',
+                        buttons: [
+                            {
+                                extend: 'excel',
+                                exportOptions: {
+                                    columns: ':visible',
+                                    format: {
+                                        body: function (data, row, column, node) {
+                                            data = $('<p>' + data + '</p>').text();
+                                            return $.isNumeric(data.replace(',', '.')) ? data.replace(',', '.') : data;
+                                        }
+                                    }
+                                }
+                            }
+
+                        ]
+                    });
+                }
+            })
+        });
+    });
+</script>

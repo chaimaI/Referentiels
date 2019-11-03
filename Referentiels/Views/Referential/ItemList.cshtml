@@ -1,0 +1,148 @@
+﻿@model Referentiels.Models.ItemListViewModel
+
+
+@{
+    ViewBag.Title = "liste des absences";
+
+}
+
+@Scripts.Render("~/Content/css")
+
+<div class="container-portail referentiel" style="margin-top:70px">
+    <span class="hiddenSameSelect" hidden="hidden"></span>
+    <p>
+
+        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            Voir le detail du contenu de la classe : @Model.ClasseListe.NomClasses
+        </a>
+    </p>
+
+    <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+            <a class="btn btn-success" href="@Url.Action("EditClasseListe", "Referential", new {Id=Model.ClasseListe.Id} )"> <span class='glyphicon glyphicon-pencil'></span> Editer le contenu de la liste</a>
+            <div>
+
+            </div>
+            <br />
+
+            <div class="row">
+                <div class="col-xs-12 panel-collapse">
+                    <div class="panel ulCat">
+                        @*<span class="border">  </span>*@
+                        <p><strong>Nom de la classe </strong> : @Model.ClasseListe.NomClasses</p>
+                        <p><strong>Niveau: </strong>@Model.ClasseListe.Niveau</p>
+
+                        <input type="hidden" class="hiddenId" id="hiddenId" hidden="hidden" />
+                        <span class="isSciforma" hidden="hidden" />
+                    </div>
+                </div>
+                <div class="col-xs-12 panel" id="infosSciformaDiv">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pull-right" style="margin-top:70px">
+        <div class="row boutonsActions">
+            <div class="col-xs-9">
+                <div style="margin-right:0px">
+                    <a id="btnAdd" class="btn btn-success" href="@Url.Action("CreateAbsenceListe", "Referential", new {Id=Model.ClasseListe.Id})"><span class="glyphicon glyphicon-plus"></span> Ajouter une absence dans la liste</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped" id="example">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Horaires</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Presences</th>
+                <th>Action</th>
+                <th>Commentaires</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.listItemList)
+            {
+                <tr>
+                    <td>
+                        @{var Date = DateTime.Now.ToShortDateString(); }
+                        @Date
+                    </td>
+                    <td>
+
+                        @Html.DisplayFor(modelItem => item.Horaires)
+
+                    </td>
+
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nom)
+
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Prenom)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Presences)
+
+                    </td>
+
+
+                    <td>
+
+
+                        <a class="btn btn-success" href="@Url.Action("EditItemLists", "Referential", new { id = item.Id })"><span class='glyphicon glyphicon-pencil'></span></a>
+
+
+
+                        @{ var idSlider = item.Id + "_slider"; }
+
+                        @if (item.Presences.Equals("Present"))
+                        {
+
+                            <label class="switch"><input type="checkbox" class="active" id="@item.Id" checked="@item.Presences.Equals("Present")"><span id="@idSlider" class="slider round" style="padding-left:0px; padding-top: 2px"> Present </span></label>
+
+                        }
+
+
+                        else
+                        {
+
+                            <label class="switch"><input type="checkbox" class="active" id="@item.Id" checked="@item.Presences.Equals("Absent")"><span class="slider round" id="@idSlider" style="padding-left:25px; padding-top: 2px"> Absent </span></label>
+                        }
+
+
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Commentaires)
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<script src="js/jquery.js" type="text/javascript"></script>
+<script src="js/jquery.dataTables.js" type="text/javascript"></script>
+
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+
+            $('#example').DataTable();
+        });
+    </script>
+
+}

@@ -1,0 +1,59 @@
+﻿@model Referentiels.Models.ClasseListeViewModel
+
+@{
+    ViewBag.Title = "Créer une liste";
+
+    
+    ViewBag.Error = "";
+}
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    
+
+    @Html.AntiForgeryToken()
+    @*<div id="messagesActions">
+        @Html.LabelFor(c => c, Model.MessageError, new { @class = "alert alert-danger" })
+    </div>*@
+    <div class="form-horizontal" style="margin-top:70px">
+        <div class="col-xs-12">
+            <div class="form-group">
+                @Html.LabelFor(c => c.NomClasses)
+                @Html.TextBoxFor(c => c.NomClasses, Model.NomClasses, new { id = "NomClasse", @class = "form-control-textbox form-control", @maxlength = "50" })
+                @Html.ValidationMessageFor(c => c.NomClasses, string.Empty, new { @class = " text-danger " })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(c => c.Niveau)
+                @Html.TextBoxFor(c => c.Niveau, Model.Niveau.ToString(), new { id = "Niveau", @class = "form-control-textbox form-control"})
+                @Html.ValidationMessageFor(c => c.Niveau, string.Empty, new { @class = " text-danger " })
+            </div>
+      
+
+    
+
+            <span style="font-size:17px; margin-left:-15px">Image :</span>
+            <div class="input-group" style="margin-left:-15px">
+                <label class="input-group-btn">
+                    <span class="btn btn-primary">
+                        Ajouter une Image&hellip;
+                        <input type="file" name="file"
+                               accept="" style="display: none;">
+                    </span>
+                </label>
+                <input type="text" class="form-control" style="z-index:1" readonly>
+                @*@Html.ValidationMessageFor(model => Model.MessageError, "", new { @class = "text-danger" })*@
+            </div>
+
+            @*ViewBag.MessageErreur = "L'image est obligatoire";*@
+            <br />
+
+
+            <div class="form-group">
+                <a href="@Url.Action("Index", "Referential")" class="btn btn-default">Revenir à la liste</a>
+                <input type="submit" value="Créer la liste" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+

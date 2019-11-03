@@ -1,0 +1,59 @@
+﻿@model Referentiels.Models.ItemListViewModel
+
+
+@{
+
+    ViewBag.Title = "Classes";
+
+
+}
+
+@using (Html.BeginForm("InsertImageFile", "Referentiel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    @*@Html.Partial("Breadcrumb", new ViewDataDictionary { { "breadcrumb", ViewBag.Breadcrumb } })*@
+
+    <div class="header-portail" style="margin-top:70px">Classes Epsi</div>
+
+    <div class="row boutonsActions" style="margin-top:30px">
+        <div class="col-xs-9">
+            <div class="pull-left">
+                <a class="btn btn-success" href="@Url.Action("CreateClasseListe", "Referential")"><span class="glyphicon glyphicon-plus"></span> Ajouter une liste</a>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row" style="margin-top:50px">
+
+        @foreach (var classe in Model.ClasseListes)
+        {
+
+            if (classe.Images != null)
+            {
+
+                <div class="col-md-3 img-admin-title">
+                    <a href="@Url.Action("ItemList", "Referential", new {Id=classe.Id})">
+
+                        <img title="@classe.NomClasses" src="@classe.Images"
+                             style="height:100px;width:100px;" class="img-admin" />
+                    </a>
+                    <p>@classe.NomClasses</p>
+                </div>
+            }
+
+        }
+    </div>
+
+}
+
+
+
+
+
+
+
+
+

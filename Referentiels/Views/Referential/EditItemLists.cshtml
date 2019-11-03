@@ -1,0 +1,69 @@
+﻿
+@model Referentiels.Models.ItemListViewModel
+
+
+
+
+@using (Html.BeginForm("EditItemLists", "Referential", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+
+    @Html.AntiForgeryToken()
+    @*<div id="messagesActions">
+        @Html.LabelFor(c => c, Model.MessageError, new { @class = "alert alert-danger" })
+    </div>*@
+    <div class="form-horizontal" style="margin-top:70px">
+        <div class="col-xs-12">
+
+            <h4>
+                <span>Modifier une absence à @Model.ClasseListe.NomClasses</span>
+                @Html.HiddenFor(c => c.ClasseListe)
+                @Html.HiddenFor(c => c.ClasseListe.NomClasses)
+                @Html.HiddenFor(c => c.IdClasses)
+            </h4>
+
+            <div class="form-group">
+                @Html.LabelFor(c => c.Date)
+                @Html.TextBoxFor(c => c.Date, Model.Date.ToShortDateString(), new { id = "Date", @class = "form-control-textbox form-control" })
+                @Html.ValidationMessageFor(c => c.Date, string.Empty, new { @class = "text-danger" })
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(c => c.Horaires)
+                @Html.TextBoxFor(c => c.Horaires, Model.Horaires, new { id = "Horaires", @class = "form-control-textbox form-control" })
+                @Html.ValidationMessageFor(c => c.Horaires, string.Empty, new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(c => c.Nom)
+                @Html.TextBoxFor(c => c.Nom, Model.Nom, new { id = "Nom", @class = "form-control-textbox form-control" })
+                @Html.ValidationMessageFor(c => c.Nom, string.Empty, new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(c => c.Prenom)
+                @Html.TextBoxFor(c => c.Prenom, Model.Prenom, new { id = "Prenom", @class = "form-control-textbox form-control" })
+                @Html.ValidationMessageFor(c => c.Prenom, string.Empty, new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(c => c.Presences)
+                @Html.TextBoxFor(c => c.Presences, Model.Presences, new { id = "Presences", @class = "form-control-textbox form-control" })
+                @Html.ValidationMessageFor(c => c.Presences, string.Empty, new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(c => c.Commentaires)
+                @Html.TextBoxFor(c => c.Commentaires, Model.Presences, new { id = "Commentaires", @class = "form-control-textbox form-control" })
+                @Html.ValidationMessageFor(c => c.Commentaires, string.Empty, new { @class = "text-danger" })
+            </div>
+
+
+            <div class="form-group">
+                <a href="@Url.Action("ItemList", "Referential", new {id=Model.IdClasses} )" class="btn btn-default">Revenir à la liste</a>
+                <input type="submit" value="Modifier l'élément de liste" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
